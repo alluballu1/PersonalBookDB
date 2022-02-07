@@ -11,15 +11,6 @@ import { useState } from "react";
 function App() {
   const [values, setValues] = useState([]);
 
-  const filtrationFunct = () => {
-    const test = options.filter((element) => {
-      values.some((filter) => {
-        return filter.value !== element.value && filter.label !== element.label;
-      });
-    });
-    console.log(test, values, options);
-  };
-
   const valueChangeHandler = (val) => {
     const temp = val.map((element) => element.value);
     setValues([...temp]);
