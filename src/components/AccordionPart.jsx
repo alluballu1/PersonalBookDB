@@ -5,7 +5,7 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
-const AccordionPart = () => {
+const AccordionPart = (props) => {
   return (
     <Accordion>
       <AccordionSummary
@@ -13,23 +13,12 @@ const AccordionPart = () => {
         aria-controls="panel1a-content"
         id="panel1a-header"
       >
-        <Typography>Accordion 1</Typography>
+        <Typography>{props.item.label}</Typography>
       </AccordionSummary>
       <AccordionDetails>
-        <table>
-          <tbody>
-            <tr>
-              <th>this</th>
-              <th>this</th>
-              <th>this</th>
-            </tr>
-            <tr>
-              <td>Pog</td>
-              <td>Pog</td>
-              <td>Pog</td>
-            </tr>
-          </tbody>
-        </table>
+        {props.item.label}
+        <br/>
+        {props.item.value}
       </AccordionDetails>
     </Accordion>
   );

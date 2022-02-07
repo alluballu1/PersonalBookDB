@@ -11,9 +11,18 @@ import { useState } from "react";
 function App() {
   const [values, setValues] = useState([]);
 
+  const filtrationFunct = () => {
+    const test = options.filter((element) => {
+      values.some((filter) => {
+        return filter.value !== element.value && filter.label !== element.label;
+      });
+    });
+    console.log(test, values, options);
+  };
+
   const valueChangeHandler = (val) => {
-    const temp = val;
-    setValues(temp);
+    const temp = val.map((element) => element.value);
+    setValues([...temp]);
   };
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -38,9 +47,21 @@ function App() {
                 isMulti={true}
                 placeholder="Select filter..."
               />
-              {values.map((element, index) => {
-                return <AccordionPart />;
-              })}
+              {values.length > 0 ? (
+                <div>
+                  {options
+                    .filter((element) => values.includes(element.value))
+                    .map((element, index) => {
+                      return <AccordionPart item={element} />;
+                    })}
+                </div>
+              ) : (
+                <div>
+                  {options.map((element, index) => {
+                    return <AccordionPart item={element} />;
+                  })}
+                </div>
+              )}
             </div>
           </div>
         </Box>
