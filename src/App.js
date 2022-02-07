@@ -1,12 +1,20 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { Container } from "react-bootstrap";
 import BasicSpeedDial from "./components/SpeedDial";
 import ReactSelect from "react-select";
 import image from "./media/images/wallpaperflare.com_wallpaper.jpg";
 import { Box } from "@mui/material";
+import AccordionPart from "./components/AccordionPart";
+import styles from "./styles";
+import { useState } from "react";
 
 function App() {
+  const [values, setValues] = useState([]);
+
+  const valueChangeHandler = (val) => {
+    const temp = val;
+    setValues(temp);
+  };
   const options = [
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
@@ -14,42 +22,28 @@ function App() {
   ];
   return (
     <>
-      <img
-        src={image}
-        style={{
-          position: "fixed",
-          width: "100vw",
-          height: "100vh",
-          zIndex: -10000,
-        }}
-      />
-      <Container
-        style={{
-          background: "rgb(255,255,255, 0.85)",
-          justifyContent: "center",
-          margin: "auto",
-          width: "75vw",
-          height: "100vh",
-        }}
-        
-      >
+      <img alt="background" src={image} style={styles.bgImageStyle} />
+      <Container style={styles.containerStyle}>
         <Box>
-        <div>
-          <h1>
-            TEST
-          </h1>
-        </div>
-        <div style={{ width: "50%", margin: "auto", marginTop:"10%" }}>
-          <ReactSelect
-            closeMenuOnSelect={false}
-            styles={{ background: "pink" }}
-            options={options}
-            isMulti={true}
-          />
-        </div>
+          <div>
+            <div style={styles.boxStyle}>
+              <p style={styles.titleStyle}>PERSONAL LIBRARY</p>
+            </div>
+            <div style={styles.contentStyle}>
+              <ReactSelect
+                closeMenuOnSelect={false}
+                styles={{ background: "pink" }}
+                onChange={(val) => valueChangeHandler(val)}
+                options={options}
+                isMulti={true}
+                placeholder="Select filter..."
+              />
+              {values.map((element, index) => {
+                return <AccordionPart />;
+              })}
+            </div>
+          </div>
         </Box>
-
-
         <BasicSpeedDial />
       </Container>
     </>
