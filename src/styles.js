@@ -24,7 +24,10 @@ const styles = {
     justifyContent: "center",
     margin: "auto",
     width: "75vw",
-    height: "100vh",
+    height: "fit-content",
+    minHeight:"85vh",
+    paddingBottom:"5vh",
+    borderRadius:20,
     top: 0,
   },
   bgImageStyle: {

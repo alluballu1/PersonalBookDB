@@ -11,6 +11,13 @@ import { useState } from "react";
 function App() {
   const [values, setValues] = useState([]);
 
+  const test = {
+    element1: { this: [12, 12323, 23213, 213123] },
+    element2: { this: [12, 12323, 23213, 213123] },
+    element3: { this: [12, 12323, 23213, 213123] },
+    element4: { this: [] },
+  };
+
   const valueChangeHandler = (val) => {
     const temp = val.map((element) => element.value);
     setValues([...temp]);
@@ -19,6 +26,8 @@ function App() {
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
     { value: "vanilla", label: "Vanilla" },
+    { value: "cinnamon", label: "Cinnamon" },
+    { value: "raspberry", label: "Raspberry" },
   ];
   return (
     <>
@@ -36,6 +45,7 @@ function App() {
                 onChange={(val) => valueChangeHandler(val)}
                 options={options}
                 isMulti={true}
+                formatGroupLabel="Test"
                 placeholder="Select filter..."
               />
               {values.length > 0 ? (
@@ -54,6 +64,15 @@ function App() {
                 </div>
               )}
             </div>
+            {/* {Object.values(test).map((element) => {
+              return (
+                <>
+                  {element.this.map((item) => {
+                    return <div>{item}</div>;
+                  })}
+                </>
+              );
+            })} */}
           </div>
         </Box>
         <BasicSpeedDial />
