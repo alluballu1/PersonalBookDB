@@ -7,6 +7,8 @@ import { Box } from "@mui/material";
 import AccordionPart from "./components/AccordionPart";
 import styles from "./styles";
 import { useState } from "react";
+import LoginModal from "./components/LoginModal";
+
 
 function App() {
   const [values, setValues] = useState([]);
@@ -32,7 +34,8 @@ function App() {
   return (
     <>
       <img alt="background" src={image} style={styles.bgImageStyle} />
-      <Container style={styles.containerStyle}>
+      <LoginModal/>
+      {/* <Container style={styles.containerStyle}>
         <Box>
           <div>
             <div style={styles.boxStyle}>
@@ -64,19 +67,11 @@ function App() {
                 </div>
               )}
             </div>
-            {/* {Object.values(test).map((element) => {
-              return (
-                <>
-                  {element.this.map((item) => {
-                    return <div>{item}</div>;
-                  })}
-                </>
-              );
-            })} */}
           </div>
         </Box>
         <BasicSpeedDial />
-      </Container>
+        
+      </Container> */}
     </>
   );
 }
