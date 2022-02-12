@@ -7,9 +7,18 @@ import { Box } from "@mui/material";
 import AccordionPart from "./components/AccordionPart";
 import styles from "./styles";
 import { useState } from "react";
+import LoginModal from "./components/LoginModal";
+
 
 function App() {
   const [values, setValues] = useState([]);
+
+  const test = {
+    element1: { this: [12, 12323, 23213, 213123] },
+    element2: { this: [12, 12323, 23213, 213123] },
+    element3: { this: [12, 12323, 23213, 213123] },
+    element4: { this: [] },
+  };
 
   const valueChangeHandler = (val) => {
     const temp = val.map((element) => element.value);
@@ -19,11 +28,14 @@ function App() {
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
     { value: "vanilla", label: "Vanilla" },
+    { value: "cinnamon", label: "Cinnamon" },
+    { value: "raspberry", label: "Raspberry" },
   ];
   return (
     <>
       <img alt="background" src={image} style={styles.bgImageStyle} />
-      <Container style={styles.containerStyle}>
+      <LoginModal/>
+      {/* <Container style={styles.containerStyle}>
         <Box>
           <div>
             <div style={styles.boxStyle}>
@@ -36,6 +48,7 @@ function App() {
                 onChange={(val) => valueChangeHandler(val)}
                 options={options}
                 isMulti={true}
+                formatGroupLabel="Test"
                 placeholder="Select filter..."
               />
               {values.length > 0 ? (
@@ -57,7 +70,8 @@ function App() {
           </div>
         </Box>
         <BasicSpeedDial />
-      </Container>
+        
+      </Container> */}
     </>
   );
 }
