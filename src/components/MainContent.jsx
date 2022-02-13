@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import ReactSelect from "react-select";
 import styles from "../styles";
 import BookDataTable from "./BookDataTable";
@@ -46,6 +46,7 @@ const MainContent = (props) => {
     <>
       <div style={{ height: 10 }} />
       <Container style={styles.containerStyle}>
+        <Button onClick={() => console.log("hallo")}>Authors</Button>
         <Box>
           <div>
             <div style={styles.boxStyle}>
@@ -63,15 +64,33 @@ const MainContent = (props) => {
               <ReactSelect
                 closeMenuOnSelect={false}
                 onChange={(val) => props.authorChangeHandler(val)}
-                options={_.uniqBy(authors, (item) => item.value)}
-                getOptionLabel={(option) => option.id}
-                getOptionValue={(option) => option.test}
+                options={Object.values(_.uniqBy(authors, (item) => item.value))}
                 isMulti={true}
                 formatGroupLabel="Test"
                 placeholder="Select Author"
               />
+              <ReactSelect
+                closeMenuOnSelect={true}
+                onChange={(val) => props.bookTypeHandler(val)}
+                options={props.bookType}
+                isMulti={false}
+                formatGroupLabel="Test"
+                placeholder="Select Book Type"
+              />
+
               <div style={{ overflow: "auto", maxHeight: "60vh" }}>
-                <BookDataTable filters={props.values} props={props.options} />
+                {props.authors.length > 0 ? (
+                  <BookDataTable
+                    filters={props.values}
+                    props={props.options
+                      .filter((element) =>
+                        props.authors.includes(element.author)
+                      )
+                      .map((item) => item)}
+                  />
+                ) : (
+                  <BookDataTable filters={props.values} props={props.options} />
+                )}
               </div>
             </div>
           </div>
