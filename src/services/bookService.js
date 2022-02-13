@@ -1,4 +1,4 @@
-import axios from "axios"
+import axios from "axios";
 
 let token = null;
 
@@ -7,7 +7,9 @@ const setToken = (data) => {
   return;
 };
 
-
 const fetchUserData = async () => {
-    const data = await axios.get(`${process.env.REACT_APP_URL}/users/`)
-}
+  const data = await axios.get(`${process.env.REACT_APP_URL}/users/`);
+  console.log(data)
+};
+
+export default { setToken, fetchUserData };

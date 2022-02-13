@@ -1,36 +1,51 @@
 import "./App.css";
-import { Container } from "react-bootstrap";
-import BasicSpeedDial from "./components/SpeedDial";
-import ReactSelect from "react-select";
 import image from "./media/images/wallpaperflare.com_wallpaper.jpg";
-import { Box } from "@mui/material";
-import AccordionPart from "./components/AccordionPart";
 import styles from "./styles";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginModal from "./components/LoginModal";
 import loginService from "./services/loginService";
-
+import MainContent from "./components/MainContent";
 
 function App() {
   const [values, setValues] = useState([]);
-  const [user, setUser] = useState(null)
+  const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const userInfo = window.localStorage.getItem("bookDatabaseUser")
+    if (userInfo) {
+      setUser(userInfo)
+    }
+  }, [])
+/* 
   const test = {
     element1: { this: [12, 12323, 23213, 213123] },
     element2: { this: [12, 12323, 23213, 213123] },
     element3: { this: [12, 12323, 23213, 213123] },
     element4: { this: [] },
-  };
+  }; */
 
   const valueChangeHandler = (val) => {
     const temp = val.map((element) => element.value);
     setValues([...temp]);
   };
   const loginHandler = async (values) => {
-    const data = await loginService.login(values)
-    window.localStorage.setItem("bookDatabaseUser", data)
-    setUser(data)
-    console.log(data)
+    const data = await loginService.login(values);
+    window.localStorage.setItem("bookDatabaseUser", data);
+    setUser(data);
+    //console.log(data);
+  };
+  const registerHandler = async (value) => {
+    await loginService.register(value).then(response => {
+      if (response.name === "SequelizeUniqueConstraintError") {
+        return
+      }
+      loginHandler(value)
+    })
+  };
+
+  const logOutHandler = () => {
+    setUser(null)
+    window.localStorage.removeItem("bookDatabaseUser")
   }
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -42,45 +57,19 @@ function App() {
   return (
     <>
       <img alt="background" src={image} style={styles.bgImageStyle} />
-      {!user ? <LoginModal loginHandler={(value) => loginHandler(value)}/>
-      :
-      <Container style={styles.containerStyle}>
-        <Box>
-          <div>
-            <div style={styles.boxStyle}>
-              <p style={styles.titleStyle}>PERSONAL LIBRARY</p>
-            </div>
-            <div style={styles.contentStyle}>
-              <ReactSelect
-                closeMenuOnSelect={false}
-                styles={{ background: "pink" }}
-                onChange={(val) => valueChangeHandler(val)}
-                options={options}
-                isMulti={true}
-                formatGroupLabel="Test"
-                placeholder="Select filter..."
-              />
-              {values.length > 0 ? (
-                <div>
-                  {options
-                    .filter((element) => values.includes(element.value))
-                    .map((element, index) => {
-                      return <AccordionPart item={element} />;
-                    })}
-                </div>
-              ) : (
-                <div>
-                  {options.map((element, index) => {
-                    return <AccordionPart item={element} />;
-                  })}
-                </div>
-              )}
-            </div>
-          </div>
-        </Box>
-        <BasicSpeedDial />
-        
-      </Container>}
+      {!user ? (
+        <LoginModal
+          registerHandler={(value) => registerHandler(value)}
+          loginHandler={(value) => loginHandler(value)}
+        />
+      ) : (
+          <MainContent
+            logOut={() => logOutHandler()}
+          values={values}
+          valueChangeHandler={(value) => valueChangeHandler(value)}
+          options={options}
+        />
+      )}
     </>
   );
 }
