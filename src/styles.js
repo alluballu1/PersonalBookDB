@@ -5,7 +5,7 @@ const styles = {
     borderTopWidth: 2,
     borderTopStyle: "solid",
     borderBottomStyle: "solid",
-    boxShadow: "10px 10px #7F4C30",
+    boxShadow: "5px 5px #7F4C30",
     background: "rgb(255,255,255, 0.8)",
     fontWeight: "lighter",
     fontFamily: "Times New Roman",
@@ -29,6 +29,7 @@ const styles = {
     paddingBottom:"5vh",
     borderRadius:20,
     top: 0,
+    
   },
   bgImageStyle: {
     position: "fixed",

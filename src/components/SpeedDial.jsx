@@ -3,17 +3,17 @@ import Box from '@mui/material/Box';
 import SpeedDial from '@mui/material/SpeedDial';
 import SpeedDialIcon from '@mui/material/SpeedDialIcon';
 import SpeedDialAction from '@mui/material/SpeedDialAction';
-import FileCopyIcon from '@mui/icons-material/FileCopyOutlined';
-import SaveIcon from '@mui/icons-material/Save';
-import PrintIcon from '@mui/icons-material/Print';
-import ShareIcon from '@mui/icons-material/Share';
+import LogoutIcon from '@mui/icons-material/Logout';
+import AddIcon from '@mui/icons-material/Add';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 
 
 const actions = [
-  { icon: <FileCopyIcon />, name: 'Log Out', funct:"Log Out"},
-  { icon: <SaveIcon />, name: 'Save', funct:"Save" },
-  { icon: <PrintIcon />, name: 'Print',funct:"Print" },
-  { icon: <ShareIcon />, name: 'Share',funct: "Share" },
+  { icon: <LogoutIcon />, name: 'Log Out', funct:"Log Out"},
+  { icon: <AddIcon />, name: 'Add Book', funct:"Add Book" },
+  { icon: <DeleteIcon />, name: 'Delete Book',funct:"Delete Book" },
+  { icon: <EditIcon />, name: 'Edit Book Info',funct: "Edit Book Info" },
 ];
 
 
@@ -34,7 +34,7 @@ export default function BasicSpeedDial(props) {
       <SpeedDial
         ariaLabel="SpeedDial basic example"
         sx={{ position: 'absolute', bottom: 16, right: 16}}
-        icon={<SpeedDialIcon />}
+        icon={<SpeedDialIcon /* sx={{":hover":{color:"white"}}} *//>}
         FabProps={{
             sx: {
               backgroundColor: "black",

@@ -1,13 +1,15 @@
 import { Box } from "@mui/material";
-import { Container } from "react-bootstrap";
+import { Container, Table } from "react-bootstrap";
 import ReactSelect from "react-select";
 import styles from "../styles";
 import AccordionPart from "./AccordionPart";
+import BookDataTable from "./BookDataTable";
 import BasicSpeedDial from "./SpeedDial";
 
 const MainContent = (props) => {
   return (
     <>
+      <div style={{ height: 10 }} />
       <Container style={styles.containerStyle}>
         <Box>
           <div>
@@ -39,10 +41,11 @@ const MainContent = (props) => {
                   })}
                 </div>
               )}
+              <BookDataTable propItems={props.options} />
             </div>
           </div>
         </Box>
-        <BasicSpeedDial logOut={() => props.logOut()}/>
+        <BasicSpeedDial logOut={() => props.logOut()} />
       </Container>
     </>
   );
