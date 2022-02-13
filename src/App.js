@@ -8,10 +8,12 @@ import AccordionPart from "./components/AccordionPart";
 import styles from "./styles";
 import { useState } from "react";
 import LoginModal from "./components/LoginModal";
+import loginService from "./services/loginService";
 
 
 function App() {
   const [values, setValues] = useState([]);
+  const [user, setUser] = useState(null)
 
   const test = {
     element1: { this: [12, 12323, 23213, 213123] },
@@ -24,6 +26,12 @@ function App() {
     const temp = val.map((element) => element.value);
     setValues([...temp]);
   };
+  const loginHandler = async (values) => {
+    const data = await loginService.login(values)
+    window.localStorage.setItem("bookDatabaseUser", data)
+    setUser(data)
+    console.log(data)
+  }
   const options = [
     { value: "chocolate", label: "Chocolate" },
     { value: "strawberry", label: "Strawberry" },
@@ -34,8 +42,9 @@ function App() {
   return (
     <>
       <img alt="background" src={image} style={styles.bgImageStyle} />
-      <LoginModal/>
-      {/* <Container style={styles.containerStyle}>
+      {!user ? <LoginModal loginHandler={(value) => loginHandler(value)}/>
+      :
+      <Container style={styles.containerStyle}>
         <Box>
           <div>
             <div style={styles.boxStyle}>
@@ -71,7 +80,7 @@ function App() {
         </Box>
         <BasicSpeedDial />
         
-      </Container> */}
+      </Container>}
     </>
   );
 }

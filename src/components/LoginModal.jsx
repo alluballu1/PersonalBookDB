@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import loginService from "../services/loginService";
-const LoginModal = () => {
+const LoginModal = (props) => {
   const [show, setShow] = useState(true);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -10,9 +10,7 @@ const LoginModal = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(password, username)
-    loginService.login({name:username, password:password})
-    console.log(process.env.REACT_APP_URL);
+    props.loginHandler({name:username, password:password})
   };
 
   return (
