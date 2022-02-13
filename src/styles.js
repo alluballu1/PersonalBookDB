@@ -28,7 +28,7 @@ const styles = {
     minHeight:"85vh",
     paddingBottom:"5vh",
     borderRadius:20,
-    top: 0,
+    top: 0
     
   },
   bgImageStyle: {

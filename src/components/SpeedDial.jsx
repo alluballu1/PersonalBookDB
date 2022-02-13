@@ -23,7 +23,6 @@ export default function BasicSpeedDial(props) {
     switch (value) {
       case "Log Out":
         props.logOut()
-        console.log(value)
         break
       default:
         return

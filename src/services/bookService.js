@@ -1,6 +1,6 @@
 import axios from "axios";
 
-let token = null;
+let token;
 
 const setToken = (data) => {
   token = `bearer ${data}`;
@@ -8,8 +8,10 @@ const setToken = (data) => {
 };
 
 const fetchUserData = async () => {
-  const data = await axios.get(`${process.env.REACT_APP_URL}/users/`);
-  console.log(data)
+  const config = {
+    headers: { Authorization: token },
+  };
+  const data = await axios.get(`${process.env.REACT_APP_URL}/users/`,config);
 };
 
-export default { setToken, fetchUserData };
+export default { setToken: setToken, fetchUserData: fetchUserData };

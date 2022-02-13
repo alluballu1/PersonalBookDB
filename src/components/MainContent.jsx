@@ -1,12 +1,47 @@
 import { Box } from "@mui/material";
-import { Container, Table } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
 import ReactSelect from "react-select";
 import styles from "../styles";
-import AccordionPart from "./AccordionPart";
 import BookDataTable from "./BookDataTable";
 import BasicSpeedDial from "./SpeedDial";
+import _ from "lodash";
 
 const MainContent = (props) => {
+  const [values, setValues] = useState([]);
+  const [authors, setAuthors] = useState([]);
+
+  const setValuesFunct = () => {
+    const testing = [];
+    props.options.forEach((element) => {
+      element.genres.forEach((item) => {
+        const object = {
+          label: item,
+          value: item,
+        };
+        testing.push(object);
+      });
+    });
+    setValues((arr) => [...arr, ...testing]);
+  };
+
+  const setAuthorValues = () => {
+    const testing = [];
+    props.options.forEach((element) => {
+      const object = {
+        label: element.author,
+        value: element.author,
+      };
+      testing.push(object);
+    });
+    setAuthors((arr) => [...arr, ...testing]);
+  };
+
+  useEffect(() => {
+    setValuesFunct();
+    setAuthorValues();
+  }, [props.options]);
+
   return (
     <>
       <div style={{ height: 10 }} />
@@ -19,29 +54,25 @@ const MainContent = (props) => {
             <div style={styles.contentStyle}>
               <ReactSelect
                 closeMenuOnSelect={false}
-                styles={{ background: "pink" }}
                 onChange={(val) => props.valueChangeHandler(val)}
-                options={props.options}
+                options={Object.values(_.uniqBy(values, (item) => item.value))}
                 isMulti={true}
                 formatGroupLabel="Test"
-                placeholder="Select filter..."
+                placeholder="Select Genres"
               />
-              {props.values.length > 0 ? (
-                <div>
-                  {props.options
-                    .filter((element) => props.values.includes(element.value))
-                    .map((element, index) => {
-                      return <AccordionPart item={element} />;
-                    })}
-                </div>
-              ) : (
-                <div>
-                  {props.options.map((element, index) => {
-                    return <AccordionPart item={element} />;
-                  })}
-                </div>
-              )}
-              <BookDataTable propItems={props.options} />
+              <ReactSelect
+                closeMenuOnSelect={false}
+                onChange={(val) => props.authorChangeHandler(val)}
+                options={_.uniqBy(authors, (item) => item.value)}
+                getOptionLabel={(option) => option.id}
+                getOptionValue={(option) => option.test}
+                isMulti={true}
+                formatGroupLabel="Test"
+                placeholder="Select Author"
+              />
+              <div style={{ overflow: "auto", maxHeight: "60vh" }}>
+                <BookDataTable filters={props.values} props={props.options} />
+              </div>
             </div>
           </div>
         </Box>

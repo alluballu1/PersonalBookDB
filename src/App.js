@@ -5,18 +5,21 @@ import { useEffect, useState } from "react";
 import LoginModal from "./components/LoginModal";
 import loginService from "./services/loginService";
 import MainContent from "./components/MainContent";
+import bookService from "./services/bookService";
 
 function App() {
   const [values, setValues] = useState([]);
+  const [authors, setAuthors] = useState([]);
+
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const userInfo = window.localStorage.getItem("bookDatabaseUser")
+    const userInfo = window.localStorage.getItem("bookDatabaseUser");
     if (userInfo) {
-      setUser(userInfo)
+      setUser(userInfo);
     }
-  }, [])
-/* 
+  }, []);
+  /* 
   const test = {
     element1: { this: [12, 12323, 23213, 213123] },
     element2: { this: [12, 12323, 23213, 213123] },
@@ -28,32 +31,93 @@ function App() {
     const temp = val.map((element) => element.value);
     setValues([...temp]);
   };
+  const authorChangeHandler = (val) => {
+    const temp = val.map((element) => element.value);
+    console.log(temp)
+    setAuthors([...temp]);
+  };
   const loginHandler = async (values) => {
     const data = await loginService.login(values);
     window.localStorage.setItem("bookDatabaseUser", data);
     setUser(data);
-    //console.log(data);
+    bookService.setToken(data.token);
+
   };
   const registerHandler = async (value) => {
-    await loginService.register(value).then(response => {
+    await loginService.register(value).then((response) => {
       if (response.name === "SequelizeUniqueConstraintError") {
-        return
+        return;
       }
-      loginHandler(value)
-    })
+      loginHandler(value);
+    });
   };
 
   const logOutHandler = () => {
-    setUser(null)
-    window.localStorage.removeItem("bookDatabaseUser")
-  }
-  const options = [
-    { value: "chocolate", label: "Chocolate" },
-    { value: "strawberry", label: "Strawberry" },
-    { value: "vanilla", label: "Vanilla" },
-    { value: "cinnamon", label: "Cinnamon" },
-    { value: "raspberry", label: "Raspberry" },
+    setUser(null);
+    window.localStorage.removeItem("bookDatabaseUser");
+  };
+
+  const books = [
+    {
+      value: "Book 1",
+      label: "Book 1",
+      author: "Me",
+      pubYear: 123,
+      genres: ["horror", "romance"],
+    },
+    {
+      value: "Book 2",
+      label: "Book 2",
+      author: "Me",
+      pubYear: 123,
+      genres: ["horror", "sci-fi"],
+    },
+    {
+      value: "Book 3",
+      label: "Book 3",
+      author: "Me",
+      pubYear: 123,
+      genres: ["horror"],
+    },
+    {
+      value: "Book 4",
+      label: "Book 4",
+      author: "Me",
+      pubYear: 123,
+      genres: ["horror", "romance", "esoteric"],
+    },
+
+    {
+      value: "Book 5",
+      label: "Book 5",
+      author: "Me",
+      pubYear: 123,
+      genres: ["tarot"],
+    },
+    {
+      value: "Book 6",
+      label: "Book 6",
+      author: "Me",
+      pubYear: 123,
+      genres: ["tarot", "esoteric"],
+    },
+
+    {
+      value: "Book 7",
+      label: "Book 7",
+      author: "Me",
+      pubYear: 123,
+      genres: ["sci-fi"],
+    },
+    {
+      value: "Book 8",
+      label: "Book 8",
+      author: "Me",
+      pubYear: 123,
+      genres: ["romance"],
+    },
   ];
+
   return (
     <>
       <img alt="background" src={image} style={styles.bgImageStyle} />
@@ -63,13 +127,14 @@ function App() {
           loginHandler={(value) => loginHandler(value)}
         />
       ) : (
-          <MainContent
-            logOut={() => logOutHandler()}
+        <MainContent
+          logOut={() => logOutHandler()}
           values={values}
+            authors={authors}
+            authorChangeHandler={(value) => authorChangeHandler(value)}
           valueChangeHandler={(value) => valueChangeHandler(value)}
-          options={options}
+          options={books}
         />
-          
       )}
     </>
   );
