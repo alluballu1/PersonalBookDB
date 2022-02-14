@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Table } from "react-bootstrap";
+import { Button, Table } from "react-bootstrap";
 import _ from "lodash";
 const BookDataTable = (props) => {
   const [filtered, setFiltered] = useState([[]]);
@@ -30,6 +30,7 @@ const BookDataTable = (props) => {
           <th>Author</th>
           <th>Publish Year</th>
           <th>Genres</th>
+          <th>Type(s) owned</th>
         </tr>
       </thead>
       <tbody>
@@ -39,11 +40,16 @@ const BookDataTable = (props) => {
               ? Object.values(filtered[0]).map((element, index) => (
                   <tr>
                     <td>{index + 1}</td>
-                    <td>{element.value}</td>
+                    <td>{element.name}</td>
                     <td>{element.author}</td>
                     <td>{element.pubYear}</td>
                     <td>
                       {element.genres.map((item) => (
+                        <div>{item}</div>
+                      ))}
+                    </td>
+                    <td>
+                      {element.bookTypes.map((item) => (
                         <div>{item}</div>
                       ))}
                     </td>
@@ -52,11 +58,16 @@ const BookDataTable = (props) => {
               : Object.values(props.props).map((element, index) => (
                   <tr>
                     <td>{index + 1}</td>
-                    <td>{element.value}</td>
+                    <td>{element.name}</td>
                     <td>{element.author}</td>
                     <td>{element.pubYear}</td>
                     <td>
                       {element.genres.map((item) => (
+                        <div>{item}</div>
+                      ))}
+                    </td>
+                    <td>
+                      {element.bookTypes.map((item) => (
                         <div>{item}</div>
                       ))}
                     </td>

@@ -10,6 +10,32 @@ import _ from "lodash";
 const MainContent = (props) => {
   const [values, setValues] = useState([]);
   const [authors, setAuthors] = useState([]);
+  const [filteredBooks, setFilteredBooks] = useState([])
+  
+
+
+  const filterFunct = () => {
+    if (props.pickedBookType.length > 0) {
+      let temp = [];
+      props.options.forEach((element) => {
+        element.bookTypes.forEach((item) => {
+          if (props.pickedBookType.includes(item)) {
+            temp.push(element);
+          }
+        });
+      });
+      const anotherTemp = _.uniqBy(temp, "value");
+      setFilteredBooks(anotherTemp);
+      return
+    }
+    setFilteredBooks(props.options)
+
+  };
+
+  useEffect(() => {
+    if(!props) return
+    filterFunct();
+  }, [props]);
 
   const setValuesFunct = () => {
     const testing = [];
@@ -42,13 +68,15 @@ const MainContent = (props) => {
     setAuthorValues();
   }, [props.options]);
 
+
+
   return (
     <>
       <div style={{ height: 10 }} />
       <Container style={styles.containerStyle}>
-        <Button onClick={() => console.log("hallo")}>Authors</Button>
+        <Button onClick={() => console.log(props.options)}>Authors</Button>
         <Box>
-          <div>
+          {<div>
             <div style={styles.boxStyle}>
               <p style={styles.titleStyle}>PERSONAL LIBRARY</p>
             </div>
@@ -73,27 +101,26 @@ const MainContent = (props) => {
                 closeMenuOnSelect={true}
                 onChange={(val) => props.bookTypeHandler(val)}
                 options={props.bookType}
-                isMulti={false}
+                isMulti={true}
                 formatGroupLabel="Test"
                 placeholder="Select Book Type"
               />
-
-              <div style={{ overflow: "auto", maxHeight: "60vh" }}>
-                {props.authors.length > 0 ? (
+              <div style={{ overflow: "auto", maxHeight: "50vh" }}>
+                {props.authors.length > 0  ? (
                   <BookDataTable
                     filters={props.values}
-                    props={props.options
+                    props={filteredBooks
                       .filter((element) =>
                         props.authors.includes(element.author)
                       )
                       .map((item) => item)}
                   />
                 ) : (
-                  <BookDataTable filters={props.values} props={props.options} />
+                  <BookDataTable filters={props.values} props={filteredBooks} />
                 )}
               </div>
             </div>
-          </div>
+          </div>}
         </Box>
         <BasicSpeedDial logOut={() => props.logOut()} />
       </Container>

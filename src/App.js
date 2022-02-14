@@ -6,26 +6,27 @@ import LoginModal from "./components/LoginModal";
 import loginService from "./services/loginService";
 import MainContent from "./components/MainContent";
 import bookService from "./services/bookService";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchData } from "./reducers/bookReducer";
+import BasicSpeedDial from "./components/SpeedDial";
+import { Spinner } from "react-bootstrap";
 
 function App() {
   const [values, setValues] = useState([]);
   const [authors, setAuthors] = useState([]);
-  const [pickedBookType, setPickedBookType] = useState("");
+  const [pickedBookType, setPickedBookType] = useState([]);
   const [user, setUser] = useState(null);
+  const books = useSelector((state) => state.books);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    const userInfo = window.localStorage.getItem("bookDatabaseUser");
+    const userInfo = JSON.parse(window.localStorage.getItem("bookDatabaseUser"))
     if (userInfo) {
+      bookService.setToken(userInfo.token)
+      dispatch(fetchData(userInfo.user.userId))
       setUser(userInfo);
     }
   }, []);
-  /* 
-  const test = {
-    element1: { this: [12, 12323, 23213, 213123] },
-    element2: { this: [12, 12323, 23213, 213123] },
-    element3: { this: [12, 12323, 23213, 213123] },
-    element4: { this: [] },
-  }; */
 
   const valueChangeHandler = (val) => {
     const temp = val.map((element) => element.value);
@@ -36,15 +37,22 @@ function App() {
     setAuthors([...temp]);
   };
   const bookTypeHandler = (val) => {
-    console.log(val)
-    const temp = val.value;
-    setPickedBookType(temp);
+    console.log(typeof val.value);
+    const temp = val.map((element) => element.value);
+    setPickedBookType([...temp]);
   };
+
+  const fetchBooks = (userId) => {
+    dispatch(fetchData(userId));
+  };
+
   const loginHandler = async (values) => {
     const data = await loginService.login(values);
-    window.localStorage.setItem("bookDatabaseUser", data);
+    console.log(data.user.userId);
+    window.localStorage.setItem("bookDatabaseUser", JSON.stringify(data));
     setUser(data);
     bookService.setToken(data.token);
+    fetchBooks(data.user.userId);
   };
   const registerHandler = async (value) => {
     await loginService.register(value).then((response) => {
@@ -69,20 +77,16 @@ function App() {
       value: "physical",
       label: "Physical",
     },
-    
-    {
-      value: "",
-      label: "No filter",
-    },
   ];
 
-  const books = [
+  const books1 = [
     {
       value: "Book 1",
       label: "Book 1",
       author: "Me",
       pubYear: 123,
       genres: ["horror", "romance"],
+      bookType: ["digital"],
     },
     {
       value: "Book 2",
@@ -90,13 +94,15 @@ function App() {
       author: "Me",
       pubYear: 123,
       genres: ["horror", "sci-fi"],
+      bookType: ["digital"],
     },
     {
       value: "Book 3",
       label: "Book 3",
       author: "Me",
       pubYear: 123,
-      genres: ["horror"],
+      genres: ["horror", "drama"],
+      bookType: ["digital"],
     },
     {
       value: "Book 4",
@@ -104,14 +110,15 @@ function App() {
       author: "Me",
       pubYear: 123,
       genres: ["horror", "romance", "esoteric"],
+      bookType: ["digital"],
     },
-
     {
       value: "Book 5",
       label: "Book 5",
       author: "Him",
       pubYear: 123,
       genres: ["tarot"],
+      bookType: ["digital"],
     },
     {
       value: "Book 6",
@@ -119,6 +126,7 @@ function App() {
       author: "Me",
       pubYear: 123,
       genres: ["tarot", "esoteric"],
+      bookType: ["digital"],
     },
 
     {
@@ -127,6 +135,7 @@ function App() {
       author: "Her",
       pubYear: 123,
       genres: ["sci-fi"],
+      bookType: ["digital"],
     },
     {
       value: "Book 8",
@@ -134,8 +143,39 @@ function App() {
       author: "Me",
       pubYear: 123,
       genres: ["romance"],
+      bookType: ["digital", "physical"],
+    },
+    {
+      value: "Book 9",
+      label: "Book 9",
+      author: "Me",
+      pubYear: 123,
+      genres: ["tarot", "esoteric"],
+
+      bookType: ["digital", "physical"],
+    },
+
+    {
+      value: "Book 10",
+      label: "Book 10",
+      author: "Her",
+      pubYear: 123,
+      genres: ["sci-fi"],
+      bookType: ["digital", "physical"],
+    },
+    {
+      value: "Book 11",
+      label: "Book 11",
+      author: "Me",
+      pubYear: 123,
+      genres: ["romance"],
+      bookType: ["physical"],
     },
   ];
+
+  if (books === null) {
+    return <div style={{display:"flex", flex:1, justifyContent:"center", alignItems:"center", alignSelf:"center", alignContent:"center"}}><Spinner animation="border" variant="dark" /></div>;
+  }
 
   return (
     <>
@@ -146,17 +186,19 @@ function App() {
           loginHandler={(value) => loginHandler(value)}
         />
       ) : (
-        <MainContent
-          logOut={() => logOutHandler()}
-          values={values}
-          authors={authors}
-          bookType={bookType}
-          bookTypeHandler={(value) => bookTypeHandler(value)}
-          authorChangeHandler={(value) => authorChangeHandler(value)}
-          valueChangeHandler={(value) => valueChangeHandler(value)}
-          options={books}
-        />
+         <MainContent
+            logOut={() => logOutHandler()}
+            values={values}
+            authors={authors}
+            bookType={bookType}
+            pickedBookType={pickedBookType}
+            bookTypeHandler={(value) => bookTypeHandler(value)}
+            authorChangeHandler={(value) => authorChangeHandler(value)}
+            valueChangeHandler={(value) => valueChangeHandler(value)}
+            options={books}
+            /> 
       )}
+      <BasicSpeedDial logOut={() => logOutHandler()} />
     </>
   );
 }
