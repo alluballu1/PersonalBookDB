@@ -24,7 +24,7 @@ const MainContent = (props) => {
           }
         });
       });
-      const anotherTemp = _.uniqBy(temp, "value");
+      const anotherTemp = _.uniqBy(temp, "name");
       setFilteredBooks(anotherTemp);
       return
     }
@@ -74,7 +74,6 @@ const MainContent = (props) => {
     <>
       <div style={{ height: 10 }} />
       <Container style={styles.containerStyle}>
-        <Button onClick={() => console.log(props.options)}>Authors</Button>
         <Box>
           {<div>
             <div style={styles.boxStyle}>

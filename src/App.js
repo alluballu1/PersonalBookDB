@@ -20,10 +20,13 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const userInfo = JSON.parse(window.localStorage.getItem("bookDatabaseUser"))
+    /* window.localStorage.removeItem("bookDatabaseUser"); */
+    const userInfo = JSON.parse(
+      window.localStorage.getItem("bookDatabaseUser")
+    );
     if (userInfo) {
-      bookService.setToken(userInfo.token)
-      dispatch(fetchData(userInfo.user.userId))
+      bookService.setToken(userInfo.token);
+      dispatch(fetchData(userInfo.user.userId));
       setUser(userInfo);
     }
   }, []);
@@ -79,7 +82,7 @@ function App() {
     },
   ];
 
-  const books1 = [
+  /* const books1 = [
     {
       value: "Book 1",
       label: "Book 1",
@@ -171,11 +174,7 @@ function App() {
       genres: ["romance"],
       bookType: ["physical"],
     },
-  ];
-
-  if (books === null) {
-    return <div style={{display:"flex", flex:1, justifyContent:"center", alignItems:"center", alignSelf:"center", alignContent:"center"}}><Spinner animation="border" variant="dark" /></div>;
-  }
+  ]; */
 
   return (
     <>
@@ -186,17 +185,22 @@ function App() {
           loginHandler={(value) => loginHandler(value)}
         />
       ) : (
-         <MainContent
-            logOut={() => logOutHandler()}
-            values={values}
-            authors={authors}
-            bookType={bookType}
-            pickedBookType={pickedBookType}
-            bookTypeHandler={(value) => bookTypeHandler(value)}
-            authorChangeHandler={(value) => authorChangeHandler(value)}
-            valueChangeHandler={(value) => valueChangeHandler(value)}
-            options={books}
-            /> 
+        <>
+          {books !== null ? (
+            <MainContent
+              logOut={() => logOutHandler()}
+              values={values}
+              authors={authors}
+              bookType={bookType}
+              pickedBookType={pickedBookType}
+              bookTypeHandler={(value) => bookTypeHandler(value)}
+              authorChangeHandler={(value) => authorChangeHandler(value)}
+              valueChangeHandler={(value) => valueChangeHandler(value)}
+              options={books}
+            />
+            ) :
+              <Spinner/>}
+        </>
       )}
       <BasicSpeedDial logOut={() => logOutHandler()} />
     </>

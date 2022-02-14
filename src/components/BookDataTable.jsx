@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import _ from "lodash";
 const BookDataTable = (props) => {
+
   const [filtered, setFiltered] = useState([[]]);
 
   const filterFunct = () => {
@@ -13,11 +14,12 @@ const BookDataTable = (props) => {
         }
       });
     });
-    const anotherTemp = _.uniqBy(temp, "value");
+    const anotherTemp = _.uniqBy(temp, "name");
     setFiltered([anotherTemp]);
   };
 
   useEffect(() => {
+    console.log("called!", props.props, props.filters)
     filterFunct();
   }, [props]);
 
