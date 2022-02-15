@@ -106,7 +106,8 @@ const MainContent = (props) => {
               />
               <div style={{ overflow: "auto", maxHeight: "50vh" }}>
                 {props.authors.length > 0  ? (
-                  <BookDataTable
+                  <BookDataTable 
+                    deletion={props.deletion}
                     filters={props.values}
                     props={filteredBooks
                       .filter((element) =>
@@ -115,7 +116,7 @@ const MainContent = (props) => {
                       .map((item) => item)}
                   />
                 ) : (
-                  <BookDataTable filters={props.values} props={filteredBooks} />
+                  <BookDataTable deletion={props.deletion} filters={props.values} props={filteredBooks} />
                 )}
               </div>
             </div>

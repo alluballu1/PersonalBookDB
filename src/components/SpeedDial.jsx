@@ -27,6 +27,9 @@ export default function BasicSpeedDial(props) {
       case "Add Book":
         props.openBookModal()
         break
+      case "Delete Book":
+        props.setDeletion()
+        break
       default:
         return
     }

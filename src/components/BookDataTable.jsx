@@ -1,9 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import _ from "lodash";
+import { Delete } from "@mui/icons-material";
+import styles from "../styles";
+import { useDispatch } from "react-redux";
+import { deleteBook } from "../reducers/bookReducer";
 const BookDataTable = (props) => {
-
   const [filtered, setFiltered] = useState([[]]);
+  const dispatch = useDispatch()
+  
 
   const filterFunct = () => {
     let temp = [];
@@ -19,7 +24,7 @@ const BookDataTable = (props) => {
   };
 
   useEffect(() => {
-    console.log("called!", props.props, props.filters)
+    console.log("called!", props.props, props.filters);
     filterFunct();
   }, [props]);
 
@@ -33,6 +38,7 @@ const BookDataTable = (props) => {
           <th>Publish Year</th>
           <th>Genres</th>
           <th>Type(s) owned</th>
+          {!props.deletion ? null : <th>Delete</th>}
         </tr>
       </thead>
       <tbody>
@@ -55,6 +61,11 @@ const BookDataTable = (props) => {
                         <div>{item}</div>
                       ))}
                     </td>
+                    {!props.deletion ? null : (
+                      <td  style={{ display:"flex", argin:"auto", justifyContent:"center" }}>
+                      <Delete  style={{ color:"darkred", align:"center", cursor:"pointer" }} />
+                    </td>
+                    )}
                   </tr>
                 ))
               : Object.values(props.props).map((element, index) => (
@@ -73,6 +84,11 @@ const BookDataTable = (props) => {
                         <div>{item}</div>
                       ))}
                     </td>
+                    {!props.deletion ? null : (
+                      <td  style={{ display:"flex", argin:"auto", justifyContent:"center" }}>
+                        <Delete onClick={() => dispatch(deleteBook(element))} style={{ color:"darkred", align:"center", cursor:"pointer" }} />
+                      </td>
+                    )}
                   </tr>
                 ))}
           </>

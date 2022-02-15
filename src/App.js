@@ -13,6 +13,7 @@ import { Spinner } from "react-bootstrap";
 import AddBookModal from "./components/AddBookModal";
 function App() {
   const [show, setshow] = useState(false);
+  const [deletion, setDeletion] = useState(false);
   const [values, setValues] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [pickedBookType, setPickedBookType] = useState([]);
@@ -82,7 +83,7 @@ function App() {
       label: "Physical",
     },
   ];
-  
+
   return (
     <>
       <img alt="background" src={image} style={styles.bgImageStyle} />
@@ -95,6 +96,7 @@ function App() {
         <>
           {books !== null ? (
             <MainContent
+              deletion={deletion}
               logOut={() => logOutHandler()}
               values={values}
               authors={authors}
@@ -112,6 +114,7 @@ function App() {
       )}
 
       <BasicSpeedDial
+        setDeletion={() => setDeletion(!deletion)}
         openBookModal={() => modalVisibilityHandler()}
         logOut={() => logOutHandler()}
       />
