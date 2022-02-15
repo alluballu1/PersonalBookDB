@@ -20,7 +20,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    /* window.localStorage.removeItem("bookDatabaseUser"); */
+    //window.localStorage.removeItem("bookDatabaseUser");
     const userInfo = JSON.parse(
       window.localStorage.getItem("bookDatabaseUser")
     );
@@ -59,9 +59,7 @@ function App() {
   };
   const registerHandler = async (value) => {
     await loginService.register(value).then((response) => {
-      if (response.name === "SequelizeUniqueConstraintError") {
-        return;
-      }
+      if (response.name === "SequelizeUniqueConstraintError") return;
       loginHandler(value);
     });
   };
@@ -82,99 +80,6 @@ function App() {
     },
   ];
 
-  /* const books1 = [
-    {
-      value: "Book 1",
-      label: "Book 1",
-      author: "Me",
-      pubYear: 123,
-      genres: ["horror", "romance"],
-      bookType: ["digital"],
-    },
-    {
-      value: "Book 2",
-      label: "Book 2",
-      author: "Me",
-      pubYear: 123,
-      genres: ["horror", "sci-fi"],
-      bookType: ["digital"],
-    },
-    {
-      value: "Book 3",
-      label: "Book 3",
-      author: "Me",
-      pubYear: 123,
-      genres: ["horror", "drama"],
-      bookType: ["digital"],
-    },
-    {
-      value: "Book 4",
-      label: "Book 4",
-      author: "Me",
-      pubYear: 123,
-      genres: ["horror", "romance", "esoteric"],
-      bookType: ["digital"],
-    },
-    {
-      value: "Book 5",
-      label: "Book 5",
-      author: "Him",
-      pubYear: 123,
-      genres: ["tarot"],
-      bookType: ["digital"],
-    },
-    {
-      value: "Book 6",
-      label: "Book 6",
-      author: "Me",
-      pubYear: 123,
-      genres: ["tarot", "esoteric"],
-      bookType: ["digital"],
-    },
-
-    {
-      value: "Book 7",
-      label: "Book 7",
-      author: "Her",
-      pubYear: 123,
-      genres: ["sci-fi"],
-      bookType: ["digital"],
-    },
-    {
-      value: "Book 8",
-      label: "Book 8",
-      author: "Me",
-      pubYear: 123,
-      genres: ["romance"],
-      bookType: ["digital", "physical"],
-    },
-    {
-      value: "Book 9",
-      label: "Book 9",
-      author: "Me",
-      pubYear: 123,
-      genres: ["tarot", "esoteric"],
-
-      bookType: ["digital", "physical"],
-    },
-
-    {
-      value: "Book 10",
-      label: "Book 10",
-      author: "Her",
-      pubYear: 123,
-      genres: ["sci-fi"],
-      bookType: ["digital", "physical"],
-    },
-    {
-      value: "Book 11",
-      label: "Book 11",
-      author: "Me",
-      pubYear: 123,
-      genres: ["romance"],
-      bookType: ["physical"],
-    },
-  ]; */
 
   return (
     <>
