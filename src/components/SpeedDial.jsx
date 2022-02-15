@@ -24,6 +24,9 @@ export default function BasicSpeedDial(props) {
       case "Log Out":
         props.logOut()
         break
+      case "Add Book":
+        props.openBookModal()
+        break
       default:
         return
     }

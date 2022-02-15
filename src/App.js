@@ -10,8 +10,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchData } from "./reducers/bookReducer";
 import BasicSpeedDial from "./components/SpeedDial";
 import { Spinner } from "react-bootstrap";
-
+import AddBookModal from "./components/AddBookModal";
 function App() {
+  const [show, setshow] = useState(false);
   const [values, setValues] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [pickedBookType, setPickedBookType] = useState([]);
@@ -69,6 +70,8 @@ function App() {
     window.localStorage.removeItem("bookDatabaseUser");
   };
 
+  const modalVisibilityHandler = () => setshow(!show);
+
   const bookType = [
     {
       value: "digital",
@@ -79,8 +82,7 @@ function App() {
       label: "Physical",
     },
   ];
-
-
+  
   return (
     <>
       <img alt="background" src={image} style={styles.bgImageStyle} />
@@ -103,11 +105,20 @@ function App() {
               valueChangeHandler={(value) => valueChangeHandler(value)}
               options={books}
             />
-            ) :
-              <Spinner/>}
+          ) : (
+            <Spinner />
+          )}
         </>
       )}
-      <BasicSpeedDial logOut={() => logOutHandler()} />
+
+      <BasicSpeedDial
+        openBookModal={() => modalVisibilityHandler()}
+        logOut={() => logOutHandler()}
+      />
+      <AddBookModal
+        closeModal={() => modalVisibilityHandler()}
+        modalVisibility={show}
+      />
     </>
   );
 }

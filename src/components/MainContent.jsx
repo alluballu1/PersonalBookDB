@@ -6,7 +6,6 @@ import styles from "../styles";
 import BookDataTable from "./BookDataTable";
 import BasicSpeedDial from "./SpeedDial";
 import _ from "lodash";
-import AddBookModal from "./AddBookModal";
 
 const MainContent = (props) => {
   const [values, setValues] = useState([]);
@@ -122,7 +121,6 @@ const MainContent = (props) => {
             </div>
           </div>}
         </Box>
-        <AddBookModal/>
         <BasicSpeedDial logOut={() => props.logOut()} />
       </Container>
     </>

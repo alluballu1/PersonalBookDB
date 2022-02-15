@@ -6,8 +6,7 @@ import { addBookToDatabase } from "../reducers/bookReducer";
 import styles from "../styles";
 import _ from "lodash"
 
-const AddBookModal = () => {
-  const [show, setshow] = useState(true);
+const AddBookModal = (props) => {
   const [genres, setGenres] = useState([]);
   const [bookTypes, setBookTypes] = useState([]);
   const dispatch = useDispatch();
@@ -53,9 +52,9 @@ const AddBookModal = () => {
     dispatch(addBookToDatabase(book));
   };
 
-  const closeModal = () => setshow(!show);
+  
   return (
-    <Modal centered onHide={closeModal} show={show}>
+    <Modal centered onHide={props.closeModal} show={props.modalVisibility}>
       <Modal.Header closeButton>
         <Modal.Title>Add a book</Modal.Title>
       </Modal.Header>
