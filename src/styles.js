@@ -25,11 +25,10 @@ const styles = {
     margin: "auto",
     width: "75vw",
     height: "fit-content",
-    minHeight:"85vh",
-    paddingBottom:"5vh",
-    borderRadius:20,
-    top: 0
-    
+    minHeight: "85vh",
+    paddingBottom: "5vh",
+    borderRadius: 20,
+    top: 0,
   },
   bgImageStyle: {
     position: "fixed",
@@ -38,6 +37,17 @@ const styles = {
     zIndex: -10000,
   },
   contentStyle: { width: "80%", justifyContent: "center", margin: "auto" },
+  categorySelectionStyle: {
+    padding: 1,
+    borderBottomStyle: "solid",
+    borderWidth: 1,
+    borderColor: "lightgrey",
+  },
+  addBookModalDeleteButton: {
+    color: "darkred",
+    position: "absolute",
+    right: 20,
+  },
 };
 
 export default styles;
