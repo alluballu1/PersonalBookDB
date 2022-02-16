@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Button, Table } from "react-bootstrap";
 import _ from "lodash";
-import { Delete } from "@mui/icons-material";
+import { Delete, Edit } from "@mui/icons-material";
 import styles from "../styles";
 import { useDispatch } from "react-redux";
 import { deleteBook } from "../reducers/bookReducer";
 const BookDataTable = (props) => {
   const [filtered, setFiltered] = useState([[]]);
-  const dispatch = useDispatch()
-  
+  const dispatch = useDispatch();
 
   const filterFunct = () => {
     let temp = [];
@@ -39,6 +38,7 @@ const BookDataTable = (props) => {
           <th>Genres</th>
           <th>Type(s) owned</th>
           {!props.deletion ? null : <th>Delete</th>}
+          {!props.edit ? null : <th>Edit</th>}
         </tr>
       </thead>
       <tbody>
@@ -62,9 +62,27 @@ const BookDataTable = (props) => {
                       ))}
                     </td>
                     {!props.deletion ? null : (
-                      <td  style={{ display:"flex", argin:"auto", justifyContent:"center" }}>
-                      <Delete  style={{ color:"darkred", align:"center", cursor:"pointer" }} />
-                    </td>
+                      <td>
+                        <Delete
+                          onClick={() => dispatch(deleteBook(element))}
+                          style={{
+                            color: "darkred",
+                            align: "center",
+                            cursor: "pointer",
+                          }}
+                        />
+                      </td>
+                    )}
+                    {!props.edit ? null : (
+                      <td>
+                        <Edit
+                          style={{
+                            color: "darkred",
+                            align: "center",
+                            cursor: "pointer",
+                          }}
+                        />
+                      </td>
                     )}
                   </tr>
                 ))
@@ -85,8 +103,27 @@ const BookDataTable = (props) => {
                       ))}
                     </td>
                     {!props.deletion ? null : (
-                      <td  style={{ display:"flex", argin:"auto", justifyContent:"center" }}>
-                        <Delete onClick={() => dispatch(deleteBook(element))} style={{ color:"darkred", align:"center", cursor:"pointer" }} />
+                      <td>
+                        <Delete
+                          onClick={() => dispatch(deleteBook(element))}
+                          style={{
+                            color: "darkred",
+                            align: "center",
+                            cursor: "pointer",
+                          }}
+                        />
+                      </td>
+                    )}
+                    {!props.edit ? null : (
+                      <td>
+                        <Edit
+                          onClick={() => props.editBook(element)}
+                          style={{
+                            color: "green",
+                            align: "center",
+                            cursor: "pointer",
+                          }}
+                        />
                       </td>
                     )}
                   </tr>

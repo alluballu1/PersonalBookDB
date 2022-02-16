@@ -30,6 +30,9 @@ export default function BasicSpeedDial(props) {
       case "Delete Book":
         props.setDeletion()
         break
+        case "Edit Book Info":
+          props.setEdit()
+          break
       default:
         return
     }
@@ -39,7 +42,7 @@ export default function BasicSpeedDial(props) {
       <SpeedDial
         ariaLabel="SpeedDial basic example"
         sx={{ position: 'absolute', bottom: 16, right: 16}}
-        icon={<SpeedDialIcon /* sx={{":hover":{color:"white"}}} *//>}
+        icon={<SpeedDialIcon />}
         FabProps={{
             sx: {
               backgroundColor: "black",

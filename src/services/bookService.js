@@ -38,9 +38,15 @@ const fetchUserData = async (userId) => {
   return data.data;
 };
 
+const editBook = async (values) => {
+  const data = await axios.put(`${process.env.REACT_APP_URL}/books`, values);
+  return data.data;
+};
+
 export default {
   setToken: setToken,
   fetchUserData: fetchUserData,
   addBook,
   deleteBook,
+  editBook,
 };

@@ -14,6 +14,7 @@ import AddBookModal from "./components/AddBookModal";
 function App() {
   const [show, setshow] = useState(false);
   const [deletion, setDeletion] = useState(false);
+  const [edit, setEdit] = useState(false);
   const [values, setValues] = useState([]);
   const [authors, setAuthors] = useState([]);
   const [pickedBookType, setPickedBookType] = useState([]);
@@ -66,6 +67,25 @@ function App() {
     });
   };
 
+  const editDeleteVisHandler = (value) => {
+    switch (value) {
+      case "EDIT":
+        if (deletion) {
+          setDeletion(!deletion);
+        }
+        setEdit(!edit);
+        break;
+      case "DELETE":
+        if (edit) {
+          setEdit(!edit);
+        }
+        setDeletion(!deletion);
+        break;
+      default:
+        return;
+    }
+  };
+
   const logOutHandler = () => {
     setUser(null);
     window.localStorage.removeItem("bookDatabaseUser");
@@ -97,6 +117,7 @@ function App() {
           {books !== null ? (
             <MainContent
               deletion={deletion}
+              edit={edit}
               logOut={() => logOutHandler()}
               values={values}
               authors={authors}
@@ -114,7 +135,8 @@ function App() {
       )}
 
       <BasicSpeedDial
-        setDeletion={() => setDeletion(!deletion)}
+        setDeletion={() => editDeleteVisHandler("DELETE")}
+        setEdit={() => editDeleteVisHandler("EDIT")}
         openBookModal={() => modalVisibilityHandler()}
         logOut={() => logOutHandler()}
       />

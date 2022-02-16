@@ -24,10 +24,22 @@ export const addBookToDatabase = (val) => {
 
 export const deleteBook = (val) => {
   return async (dispatch) => {
-    await bookService.deleteBook(val.bookId)
+    if(!window.confirm(`Delete ${val.name} permanently?`)) return
+    await bookService.deleteBook(val.bookId);
     dispatch({
       type: "DELETE_BOOK",
       data: val,
+    });
+  };
+};
+
+export const editBook = (val, oldVal) => {
+  return async (dispatch) => {
+    const data = await bookService.editBook(val);
+    const newData = { oldVal: oldVal, newVal: data };
+    dispatch({
+      type: "EDIT_BOOK",
+      data: newData,
     });
   };
 };
@@ -43,9 +55,15 @@ const bookReducer = (state = null, action) => {
     case "DELETE_BOOK":
       const deleteTemp = [...state];
       const index = deleteTemp.indexOf(action.data);
-      deleteTemp.splice(index, 1)
+      deleteTemp.splice(index, 1);
       console.log(index);
       return deleteTemp;
+    case "EDIT_BOOK":
+      console.log(action.data, "HERE I AM");
+      const tempEdit = [...state];
+      const eIndex = tempEdit.indexOf(action.data.oldVal);
+      tempEdit.splice(eIndex, 1, action.data.newVal);
+      return tempEdit;
     default:
       return state;
   }
