@@ -17,7 +17,6 @@ const MainContent = (props) => {
 
   const editBookDataAndVisHandler = (val) => {
     setEditedBookData(val)
-    console.log(val)
     setEditVisibility(!editVisibility)
   }
 

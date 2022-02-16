@@ -50,6 +50,8 @@ const AddBookModal = (props) => {
       userId: user.user.userId,
     };
     dispatch(addBookToDatabase(book));
+    props.closeModal()
+    window.alert("Book added")
   };
 
   
@@ -114,7 +116,7 @@ const AddBookModal = (props) => {
         <Button form={"bookForm"} type="submit" variant="dark">
           Add Book
         </Button>
-        <Button onClick={() => console.log(bookTypes)} variant="secondary">
+        <Button onClick={props.closeModal} variant="secondary">
           Cancel
         </Button>
       </Modal.Footer>

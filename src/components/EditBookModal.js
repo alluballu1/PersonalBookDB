@@ -53,9 +53,9 @@ const EditBookModal = (props) => {
       bookId: props.bookData.bookId,
       userId: user.user.userId,
     };
-    console.log(book, props.bookData);
       dispatch(editBook(book, props.bookData));
-      props.close()
+    props.close()
+    window.alert("Book edited")
   };
 
   return (

@@ -43,7 +43,6 @@ function App() {
     setAuthors([...temp]);
   };
   const bookTypeHandler = (val) => {
-    console.log(typeof val.value);
     const temp = val.map((element) => element.value);
     setPickedBookType([...temp]);
   };
@@ -54,7 +53,6 @@ function App() {
 
   const loginHandler = async (values) => {
     const data = await loginService.login(values);
-    console.log(data.user.userId);
     window.localStorage.setItem("bookDatabaseUser", JSON.stringify(data));
     setUser(data);
     bookService.setToken(data.token);

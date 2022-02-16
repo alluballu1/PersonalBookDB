@@ -23,7 +23,6 @@ const BookDataTable = (props) => {
   };
 
   useEffect(() => {
-    console.log("called!", props.props, props.filters);
     filterFunct();
   }, [props]);
 

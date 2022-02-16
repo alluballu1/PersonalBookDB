@@ -13,7 +13,6 @@ export const fetchData = (userId) => {
 export const addBookToDatabase = (val) => {
   return async (dispatch) => {
     const data = await bookService.addBook(val);
-    console.log(data);
     if (data === "SequelizeUniqueConstraintError") return;
     dispatch({
       type: "ADD_BOOK",
@@ -56,10 +55,8 @@ const bookReducer = (state = null, action) => {
       const deleteTemp = [...state];
       const index = deleteTemp.indexOf(action.data);
       deleteTemp.splice(index, 1);
-      console.log(index);
       return deleteTemp;
     case "EDIT_BOOK":
-      console.log(action.data, "HERE I AM");
       const tempEdit = [...state];
       const eIndex = tempEdit.indexOf(action.data.oldVal);
       tempEdit.splice(eIndex, 1, action.data.newVal);

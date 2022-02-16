@@ -12,7 +12,7 @@ const addBook = async (values) => {
     headers: { Authorization: token },
   };
   const data = await axios.post(
-    `${process.env.REACT_APP_URL}/books`,
+    `/api/books`,
     values,
     config
   );
@@ -20,8 +20,7 @@ const addBook = async (values) => {
 };
 
 const deleteBook = async (values) => {
-  console.log(values);
-  const data = await axios.delete(`${process.env.REACT_APP_URL}/books`, {
+  const data = await axios.delete(`/api/books`, {
     data: { bookId: values },
   });
   return data;
@@ -32,14 +31,14 @@ const fetchUserData = async (userId) => {
     headers: { Authorization: token },
   };
   const data = await axios.get(
-    `${process.env.REACT_APP_URL}/users/${userId}`,
+    `/api/users/${userId}`,
     config
   );
   return data.data;
 };
 
 const editBook = async (values) => {
-  const data = await axios.put(`${process.env.REACT_APP_URL}/books`, values);
+  const data = await axios.put(`/api/books`, values);
   return data.data;
 };
 
